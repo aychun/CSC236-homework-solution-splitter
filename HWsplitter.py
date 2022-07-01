@@ -1,6 +1,6 @@
 # from __future__ import annotations
 import PyPDF2
-from PyPDF2.pdf import PageObject
+from PyPDF2 import PageObject
 import re
 import os
 from pathlib import Path
@@ -85,7 +85,7 @@ class HWsplitter:
 
     @staticmethod
     def _getQuestionFromContent(content: str) -> str:
-        return content[1:3]
+        return content[:2]
 
     def __getSolutionPagesDict(self) -> Dict[str, List[PageObject]]:
         out = {}
