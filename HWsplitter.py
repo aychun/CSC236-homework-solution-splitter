@@ -56,10 +56,15 @@ class HWsplitter:
         pages = []
         qs = self.extractQuestions()
         for i, c in enumerate(self.contents):
-            q = HWsplitter._getQuestionFromContent(c)
-            if q in qs:
+
+            q = re.search("\d\s", c[:3])
+            if q:
                 pages.append(i)
 
+            else:
+                q = re.search("Question \d", c)
+                if q and HWsplitter._getQuestionFromContent(c) not in qs:
+                    pages.append(i)
         return pages
 
     def extractSolutionPageNums(self) -> Dict[str, Tuple[int]]:
@@ -69,7 +74,7 @@ class HWsplitter:
 
         for i, c in enumerate(self.contents):
             q = HWsplitter._getQuestionFromContent(c)
-            if q in qs[:-1]:  # disregard the last question for simpicity
+            if q in qs[:-1]:  # disregard the last question for simplicity
                 l = self._findSolutionLength(i, qs, qsPageNums)
                 pages = tuple(j for j in range(i, i + l))
                 out[q] = pages
