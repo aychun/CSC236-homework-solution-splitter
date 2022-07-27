@@ -37,18 +37,29 @@ class HWsplitter:
             if q != []:
                 questions.update(q)
 
-        out = list(questions)
+        qs = list(questions)
+        qs = [s[s.index(" ") + 1 :] for s in qs]
+
+        out = []
+
+        for c in self.contents:
+            q = HWsplitter._getQuestionFromContent(c)
+            if q in qs:
+                out.append(q)
+
         out.sort()
 
-        return [s[s.index(" ") + 1 :] for s in out]
+        return out
 
     def extractQuestionPageNums(self) -> List[int]:
 
         pages = []
+        qs = self.extractQuestions()
         for i, c in enumerate(self.contents):
-            q = re.search("Question \d", c)
-            if q:
+            q = HWsplitter._getQuestionFromContent(c)
+            if q in qs:
                 pages.append(i)
+
         return pages
 
     def extractSolutionPageNums(self) -> Dict[str, Tuple[int]]:
