@@ -17,3 +17,5 @@ Python code to split a .pdf file to make it easier to be submitted on Crowdmark.
 ##  Known Bugs
 - Any extra credit questions will be combined with the last non-extra question
 
+## Updates
+- Changed extractQuestions() and extractQuestionPageNums() in `HWsplitter.py` to correctly extract questions from the file (July/27/2022)
